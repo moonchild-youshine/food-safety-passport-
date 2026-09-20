@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 def create_qr(batch_id):
-    url = f"http://127.0.0.1:5000/product/{batch_id}"
+    url = f"http://food-safety-passport.onrender.com/product/{batch_id}"
 
     img = qrcode.make(url)
 
