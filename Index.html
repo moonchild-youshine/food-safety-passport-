@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Food Safety Passport</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🥗 Food Safety Passport
+    </div>
+
+    <a href="/dashboard">
+        Business Dashboard
+    </a>
+
+</header>
+
+
+<section class="hero">
+
+    <h1>
+        Every food has a journey.
+        <br>
+        Give it a passport.
+    </h1>
+
+    <p>
+        A digital traceability system that connects
+        food products with their safety journey.
+    </p>
+
+</section>
+
+
+<section class="container">
+
+    <h2>Demo Products</h2>
+
+    <div class="product-grid">
+
+        {% for batch, product in products.items() %}
+
+        <div class="card">
+
+            <div class="food-icon">
+                🥪
+            </div>
+
+            <h3>
+                {{ product.name }}
+            </h3>
+
+            <p>
+                Batch: {{ batch }}
+            </p>
+
+
+            {% if product.status == "safe" %}
+
+                <div class="status safe">
+                    🟢 {{ product.status_text }}
+                </div>
+
+            {% else %}
+
+                <div class="status alert">
+                    🔴 {{ product.status_text }}
+                </div>
+
+            {% endif %}
+
+
+            <a class="button"
+               href="/product/{{ batch }}">
+
+                View Passport
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+</body>
+
+</html>

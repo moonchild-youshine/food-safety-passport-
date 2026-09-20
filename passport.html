@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Food Safety Passport</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🥗 Food Safety Passport
+    </div>
+
+</header>
+
+
+<section class="passport">
+
+    <div class="passport-header">
+                               <div class="qr-box">
+    <img src="/static/qr/{{ batch_id }}.png"
+         alt="QR Code">
+    <p>SCAN TO VIEW PASSPORT</p>
+</div>
+                  
+    
+
+        <div>
+
+            <p class="small">
+                FOOD SAFETY PASSPORT
+            </p>
+
+            <h1>
+                {{ product.name }}
+            </h1>
+
+            <p>
+                Batch: <strong>{{ batch_id }}</strong>
+            </p>
+
+        </div>
+
+
+        {% if product.status == "safe" %}
+
+            <div class="big-status safe">
+                🟢
+                <br>
+                {{ product.status_text }}
+            </div>
+
+        {% else %}
+
+            <div class="big-status alert">
+                🔴
+                <br>
+                {{ product.status_text }}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="info-grid">
+
+        <div class="info-box">
+
+            <h3>Prepared</h3>
+
+            <p>
+                {{ product.prepared }}
+            </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>Packed</h3>
+
+            <p>
+                {{ product.packed }}
+            </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>Storage</h3>
+
+            <p>
+                ❄️ {{ product.storage }}
+            </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>Use by</h3>
+
+            <p>
+                {{ product.use_by }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h2>
+        Your Food's Journey
+    </h2>
+
+
+    <div class="timeline">
+
+        {% for icon, event, time in product.journey %}
+
+        <div class="timeline-item">
+
+            <div class="timeline-icon">
+                {{ icon }}
+            </div>
+
+            <div>
+
+                <h3>
+                    {{ event }}
+                </h3>
+
+                <p>
+                    {{ time }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="allergen">
+
+        <h3>Allergen Information</h3>
+
+        <p>
+            {{ product.allergens }}
+        </p>
+
+    </div>
+
+
+    {% if product.status == "alert" %}
+
+        <div class="warning">
+
+            <h3>
+                ⚠️ Check Required
+            </h3>
+
+            <p>
+                A recorded storage condition requires
+                further checking of this batch.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+    <a class="report"
+       href="/report/{{ batch_id }}">
+
+        Report an Issue
+
+    </a>
+
+
+</section>
+
+
+</body>
+
+</html>

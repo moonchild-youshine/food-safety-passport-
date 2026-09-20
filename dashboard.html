@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Food Safety Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🥗 Food Safety Passport
+    </div>
+
+    <a href="/">
+        Consumer View
+    </a>
+
+</header>
+
+
+<section class="container">
+
+    <h1>
+        Business Dashboard
+    </h1>
+
+    <p>
+        Monitor food batches and their recorded conditions.
+    </p>
+
+
+    <div class="dashboard">
+
+        {% for batch, product in products.items() %}
+
+        <div class="batch-card">
+
+            <div>
+
+                <h2>
+                    {{ product.name }}
+                </h2>
+
+                <p>
+                    Batch: {{ batch }}
+                </p>
+
+            </div>
+
+
+            {% if product.status == "safe" %}
+
+                <div class="status safe">
+                    🟢 Normal
+                </div>
+
+            {% else %}
+
+                <div class="status alert">
+                    🔴 Check Required
+                </div>
+
+            {% endif %}
+
+
+            <div class="actions">
+
+                <a href="/product/{{ batch }}">
+                    View
+                </a>
+
+                <a href="/alert/{{ batch }}">
+                    Demo Alert
+                </a>
+
+                <a href="/reset/{{ batch }}">
+                    Reset
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+</body>
+
+</html>
